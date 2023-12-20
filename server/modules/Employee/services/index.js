@@ -4,8 +4,12 @@ exports.createSingleEmployee = (data) => {
     return Employee.create(data);
 };
 
-exports.findAllEmployees = () => {
-    return Employee.findAll();
+exports.findAllEmployees = ({ page, limit }) => {
+    return Employee.findAll({
+        order: [["createdAt", "DESC"]],
+        limit,
+        offset: (page - 1) * limit,
+    });
 };
 
 exports.countAllEmployees = () => {
