@@ -11,9 +11,13 @@ exports.createEmployee = async (req, res, next) => {
 
 exports.getAllEmployees = async (req, res, next) => {
     try {
-        console.log("inside getAllEmployees");
+        const { page = 1 } = req.query;
+        const limit = 5;
         const [employees, count] = await Promise.all([
-            employeeServices.findAllEmployees(),
+            employeeServices.findAllEmployees({
+                page,
+                limit,
+            }),
             employeeServices.countAllEmployees(),
         ]);
 
