@@ -11,8 +11,10 @@ exports.validateEmployee = (req, res, next) => {
     });
 
     if (error) {
-        res.status(300).json({
-            error: "abc",
+        res.status(400).json({
+            error: {
+                message: error.details[0].message,
+            },
         });
     }
 
