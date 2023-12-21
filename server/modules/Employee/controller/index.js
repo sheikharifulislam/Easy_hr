@@ -1,11 +1,15 @@
 const employeeServices = require("../services");
-
+const generateError = require("../../../utils/generateError");
 exports.createEmployee = async (req, res, next) => {
     try {
+        const isExists = await employeeServices.findSingleEmployee("email", req.body.email);
+        if (isExists) {
+            throw generateError("This email already exists", 400);
+        }
         const employee = await employeeServices.createSingleEmployee(req.body);
-        res.status(200).json(employee);
-    } catch (error) {
-        next();
+        return res.status(200).json(employee);
+    } catch (e) {
+        next(e);
     }
 };
 
@@ -21,21 +25,21 @@ exports.getAllEmployees = async (req, res, next) => {
             employeeServices.countAllEmployees(),
         ]);
 
-        res.status(200).json({
+        return res.status(200).json({
             data: employees,
             pagination: {
                 total_records: count,
             },
         });
-    } catch (error) {
-        next();
+    } catch (e) {
+        next(e);
     }
 };
 
 exports.insertMultipleEmployees = async (req, res, next) => {
     try {
         const employees = await employeeServices.createMultipleEmployees(req.body.employees);
-        res.status(200).json({
+        return res.status(200).json({
             data: employees,
             ...(req.body.errorOnCall.length && { errorOnCall: req.body.errorOnCall }),
         });
