@@ -39,7 +39,7 @@ const Table = ({ employees = [], page, pages, setPage, isPlaceholderData, isLoad
             selectedKeys={[...selectedEmails]}
             bottomContent={
                 <div className="flex w-full justify-center">
-                    {!isLoading && (
+                    {!isLoading && employees.length > 0 ? (
                         <Pagination
                             isCompact
                             showControls
@@ -49,7 +49,7 @@ const Table = ({ employees = [], page, pages, setPage, isPlaceholderData, isLoad
                             total={pages}
                             onChange={(page) => setPage(page)}
                         />
-                    )}
+                    ) : null}
                 </div>
             }
             classNames={{
