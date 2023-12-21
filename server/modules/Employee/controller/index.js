@@ -41,7 +41,7 @@ exports.insertMultipleEmployees = async (req, res, next) => {
         const employees = await employeeServices.createMultipleEmployees(req.body.employees);
         return res.status(200).json({
             data: employees,
-            ...(req.body.errorOnCall.length && { errorOnCall: req.body.errorOnCall }),
+            ...(req.body.errorOnCol.length && { errorOnCol: req.body.errorOnCol }),
         });
     } catch (e) {
         next(e);
