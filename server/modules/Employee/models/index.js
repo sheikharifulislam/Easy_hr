@@ -24,6 +24,7 @@ const Employee = sequelize.define("Employees", {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             isEmail: true,
         },
