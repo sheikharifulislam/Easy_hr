@@ -4,6 +4,8 @@ import { ToastContainer } from "react-toastify";
 import Header from "./components/Header/Header";
 import BaseModal from "./components/Modal/BaseModal";
 import { Table } from "./components/Table";
+
+import TableProvider from "./context/TableProvider";
 import { useGetAllEmployee } from "./query/employee.query";
 
 function App() {
@@ -38,16 +40,18 @@ function App() {
                 marginTop: "50px",
             }}
         >
-            <Header handleOpen={handleOpen} />
-            <Table
-                employees={result?.data}
-                page={page}
-                pages={pages}
-                setPage={setPage}
-                isPlaceholderData={isPlaceholderData}
-                isLoading={isLoading}
-            />
-            <BaseModal modalName={modalName} isOpen={isOpen} onClose={onClose} />
+            <TableProvider>
+                <Header handleOpen={handleOpen} />
+                <Table
+                    employees={result?.data}
+                    page={page}
+                    pages={pages}
+                    setPage={setPage}
+                    isPlaceholderData={isPlaceholderData}
+                    isLoading={isLoading}
+                />
+                <BaseModal modalName={modalName} isOpen={isOpen} onClose={onClose} />
+            </TableProvider>
             <ToastContainer />
         </div>
     );
