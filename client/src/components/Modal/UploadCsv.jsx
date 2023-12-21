@@ -28,10 +28,13 @@ const UploadCsv = ({ onClose }) => {
             return toast.error("You can upload only CSV file");
         }
         const formData = new FormData();
-        console.log(file);
         formData.append("employees", file);
         const result = await uploadCsvMutation(formData);
-        console.log(result);
+        if (result) {
+            onClose();
+            const errorOnColMessage = `But the problem was ${result?.errorOnCol} number column of CSV.so system remove this column`;
+            toast.success(`Successfully uploaded file. ${result?.errorOnCol ? errorOnColMessage : ""} `);
+        }
     };
 
     return (
