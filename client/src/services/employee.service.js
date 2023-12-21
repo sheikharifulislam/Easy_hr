@@ -16,3 +16,11 @@ export const createEmployee = (data) => {
         body: data,
     });
 };
+
+export const sendEmails = (data) => {
+    return handleRequest({
+        path: "/email",
+        method: "POST",
+        body: data,
+    });
+};
