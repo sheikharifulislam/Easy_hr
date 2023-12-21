@@ -9,6 +9,8 @@ import {
     TableRow,
     getKeyValue,
 } from "@nextui-org/react";
+import { useContext } from "react";
+import { TableContext } from "../../context/TableProvider";
 
 const tableHeaders = [
     {
@@ -26,10 +28,15 @@ const tableHeaders = [
 ];
 
 const Table = ({ employees = [], page, pages, setPage, isPlaceholderData, isLoading }) => {
+    const { selectedEmails, setSelectedEmails } = useContext(TableContext);
+
     return (
         <NextUiTable
             aria-label="Example table with client side pagination"
             selectionMode="multiple"
+            color="primary"
+            onSelectionChange={setSelectedEmails}
+            selectedKeys={[...selectedEmails]}
             bottomContent={
                 <div className="flex w-full justify-center">
                     {!isLoading && (
@@ -63,7 +70,7 @@ const Table = ({ employees = [], page, pages, setPage, isPlaceholderData, isLoad
                 loadingState={isPlaceholderData || isLoading ? "loading" : "idle"}
             >
                 {(employee) => (
-                    <TableRow key={employee._id}>
+                    <TableRow key={employee.email}>
                         {(columnKey) => <TableCell>{getKeyValue(employee, columnKey)}</TableCell>}
                     </TableRow>
                 )}
