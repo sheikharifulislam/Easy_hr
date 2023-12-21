@@ -16,12 +16,12 @@ app.get("/health", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-    console.log("from global error handler");
     const message = err.message && err.status ? err.message : "Server Error Occured";
     const status = err.status ? err.status : 500;
-    console.log(err.message);
     res.status(status).json({
-        message,
+        error: {
+            message,
+        },
     });
 });
 
