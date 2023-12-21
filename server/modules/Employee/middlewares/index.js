@@ -2,24 +2,24 @@ const stream = require("stream");
 const multer = require("multer");
 const csv = require("csv-parser");
 const { employeeSchema } = require("../validator");
-const error = require("../../../utils/error");
+const generateError = require("../../../utils/generateError");
 const toCamelCase = require("../../../utils/toCamelCase");
 
 exports.validateEmployee = (req, res, next) => {
-    const { error, value: validatedData } = employeeSchema.validate(req.body, {
-        stripUnknown: true,
-    });
-
-    if (error) {
-        res.status(400).json({
-            error: {
-                message: error.details[0].message,
-            },
+    try {
+        const { error, value: validatedData } = employeeSchema.validate(req.body, {
+            stripUnknown: true,
         });
-    }
 
-    req.body = validatedData;
-    next();
+        if (error) {
+            throw generateError(error.details[0].message, 400);
+        }
+
+        req.body = validatedData;
+        next();
+    } catch (e) {
+        next(e);
+    }
 };
 
 exports.fileUploader = (req, res, next) => {
@@ -85,28 +85,25 @@ exports.parseCsvFiles = (req, res, next) => {
 };
 
 exports.validateEmployees = (req, res, next) => {
-    const validData = [];
-    const errorOnCall = [];
+    try {
+        const validData = [];
+        const errorOnCall = [];
 
-    console.log("from validateEmployees", req.body.employees.length);
-    for (let i = 0; i < req.body.employees.length; i++) {
-        const { error, value: validatedData } = employeeSchema.validate(req.body.employees[i], {
-            stripUnknown: true,
-        });
-        if (error) {
-            // console.log("fom errors", {
-            //     data: req.body.employees[i],
-            //     cellNumber: i,
-            // });
-            errorOnCall.push(i + 1);
-        } else {
-            validData.push(validatedData);
+        for (let i = 0; i < req.body.employees.length; i++) {
+            const { error, value: validatedData } = employeeSchema.validate(req.body.employees[i], {
+                stripUnknown: true,
+            });
+            if (error) {
+                errorOnCall.push(i + 1);
+            } else {
+                validData.push(validatedData);
+            }
         }
+
+        req.body.employees = validData;
+        req.body.errorOnCall = errorOnCall;
+        next();
+    } catch (e) {
+        next(e);
     }
-
-    console.log("from validateEmployees", validData.length);
-
-    req.body.employees = validData;
-    req.body.errorOnCall = errorOnCall;
-    next();
 };
