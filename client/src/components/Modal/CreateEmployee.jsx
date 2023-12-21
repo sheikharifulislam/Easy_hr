@@ -1,19 +1,14 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { ValidationError, object, string } from "yup";
+import { ValidationError } from "yup";
 import { useCreateEmployee } from "../../query/employee.query";
-
-const employeeSchema = object({
-    firstName: string().min(3, "Must be at least 3 characters long").required("First name is require"),
-    lastName: string().min(3, "Must be at least 3 characters long").required("Last name is require"),
-    email: string().email("Provide valid email address").required("Email is require"),
-});
+import { employeeSchema } from "../../validator";
 
 const CreateEmployee = ({ onClose }) => {
     const [employee, setEmployee] = useState({});
     const [errors, setErrors] = useState({});
-    const { mutateAsync: createEmployeeMutation } = useCreateEmployee();
+    const { isPending, mutateAsync: createEmployeeMutation } = useCreateEmployee();
 
     const handleEmployeeData = (e) => {
         const { name, value } = e.target;
@@ -25,7 +20,6 @@ const CreateEmployee = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const validateData = await employeeSchema.validate(employee, { abortEarly: false });
 
@@ -92,7 +86,7 @@ const CreateEmployee = ({ onClose }) => {
                 onChange={handleEmployeeData}
             />
 
-            <Button type="submit" className="mt-3 ">
+            <Button type="submit" className="mt-3" disabled={isPending} isLoading={isPending}>
                 Submit
             </Button>
         </form>
