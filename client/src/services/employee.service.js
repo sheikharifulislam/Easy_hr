@@ -24,3 +24,12 @@ export const sendEmails = (data) => {
         body: data,
     });
 };
+
+export const uploadCsvFile = (data) => {
+    return handleRequest({
+        path: "/employees/upload-csv",
+        method: "POST",
+        body: data,
+        contentType: "multipart/form-data",
+    });
+};

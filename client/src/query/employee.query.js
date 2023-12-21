@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createEmployee, getAllEmployees, sendEmails } from "../services/employee.service";
+import { createEmployee, getAllEmployees, sendEmails, uploadCsvFile } from "../services/employee.service";
 
 export const useGetAllEmployee = (args) => {
     return useQuery({
@@ -22,5 +22,15 @@ export const useCreateEmployee = () => {
 export const useSendEmails = () => {
     return useMutation({
         mutationFn: sendEmails,
+    });
+};
+
+export const useUploadCsv = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: uploadCsvFile,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["employee"] });
+        },
     });
 };
