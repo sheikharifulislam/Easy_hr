@@ -1,7 +1,14 @@
 const Employee = require("../models");
-
-exports.createSingleEmployee = (data) => {
+exports.createSingleEmployee = async (data) => {
     return Employee.create(data);
+};
+
+exports.findSingleEmployee = (key, value) => {
+    return Employee.findOne({
+        where: {
+            [key]: value,
+        },
+    });
 };
 
 exports.findAllEmployees = ({ page, limit }) => {
