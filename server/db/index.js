@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize("mysql://root:123456@localhost/easy_hr", {
-    dialect: "mysql",
+const sequelize = new Sequelize(process.env.DB_URL, {
+    dialect: process.env.DB_TYPE,
     define: {
         freezeTableName: true,
     },

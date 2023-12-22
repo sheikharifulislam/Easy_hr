@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 app.listen(port, async () => {
     await connectDb();
     console.log(`Server is listen on ${port}`);
