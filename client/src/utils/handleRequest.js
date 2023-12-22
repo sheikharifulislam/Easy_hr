@@ -2,7 +2,7 @@ import axios from "axios";
 
 const handleRequest = async ({ path, method = "GET", params = {}, body = null, contentType }) => {
     const defaultConfig = {
-        baseURL: "http://localhost:5000/api/v1",
+        baseURL: import.meta.env.VITE_BASE_URL,
         timeout: 5000,
         headers: {
             "Content-Type": contentType ?? "application/json",
