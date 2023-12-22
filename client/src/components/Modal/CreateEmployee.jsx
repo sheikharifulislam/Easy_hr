@@ -1,4 +1,5 @@
 import { Button, Input } from "@nextui-org/react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { ValidationError } from "yup";
@@ -91,6 +92,10 @@ const CreateEmployee = ({ onClose }) => {
             </Button>
         </form>
     );
+};
+
+CreateEmployee.propTypes = {
+    onClose: PropTypes.func.isRequired,
 };
 
 export default CreateEmployee;
