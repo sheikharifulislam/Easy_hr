@@ -87,21 +87,21 @@ exports.parseCsvFiles = (req, res, next) => {
 exports.validateEmployees = (req, res, next) => {
     try {
         const validData = [];
-        const errorOnCall = [];
+        const errorOnCol = [];
 
         for (let i = 0; i < req.body.employees.length; i++) {
             const { error, value: validatedData } = employeeSchema.validate(req.body.employees[i], {
                 stripUnknown: true,
             });
             if (error) {
-                errorOnCall.push(i + 1);
+                errorOnCol.push(i + 1);
             } else {
                 validData.push(validatedData);
             }
         }
 
         req.body.employees = validData;
-        req.body.errorOnCall = errorOnCall;
+        req.body.errorOnCol = errorOnCol;
         next();
     } catch (e) {
         next(e);
