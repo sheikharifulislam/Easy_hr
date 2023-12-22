@@ -1,4 +1,5 @@
 import { Button, Input, Textarea } from "@nextui-org/react";
+import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { ValidationError } from "yup";
@@ -78,6 +79,10 @@ const SendEmail = ({ onClose }) => {
             </Button>
         </form>
     );
+};
+
+SendEmail.propTypes = {
+    onClose: PropTypes.func.isRequired,
 };
 
 export default SendEmail;

@@ -1,4 +1,5 @@
 import { Button } from "@nextui-org/react";
+import PropTypes from "prop-types";
 import { useContext } from "react";
 import { FaMailBulk } from "react-icons/fa";
 import { FaFileCsv, FaPlus } from "react-icons/fa6";
@@ -21,6 +22,10 @@ const Header = ({ handleOpen }) => {
             )}
         </div>
     );
+};
+
+Header.propTypes = {
+    handleOpen: PropTypes.func.isRequired,
 };
 
 export default Header;
