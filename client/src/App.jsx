@@ -8,7 +8,6 @@ import { Table } from "./components/Table";
 import TableProvider from "./context/TableProvider";
 
 function App() {
-    const [page, setPage] = useState(1);
     const [modalName, setModalName] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -21,7 +20,7 @@ function App() {
         <div className="w-[80%] mx-auto ">
             <TableProvider>
                 <Header handleOpen={handleOpen} />
-                <Table page={page} setPage={setPage} />
+                <Table />
                 <BaseModal modalName={modalName} isOpen={isOpen} onClose={onClose} />
             </TableProvider>
             <ToastContainer />

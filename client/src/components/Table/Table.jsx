@@ -9,8 +9,7 @@ import {
     TableRow,
     getKeyValue,
 } from "@nextui-org/react";
-import PropTypes from "prop-types";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import { TableContext } from "../../context/TableProvider";
 import { useGetAllEmployee } from "../../query/employee.query";
 
@@ -29,7 +28,8 @@ const tableHeaders = [
     },
 ];
 
-const Table = ({ page, setPage }) => {
+const Table = () => {
+    const [page, setPage] = useState(1);
     const { selectedEmails, setSelectedEmails } = useContext(TableContext);
     const {
         data: result = {},
@@ -92,11 +92,6 @@ const Table = ({ page, setPage }) => {
             </TableBody>
         </NextUiTable>
     );
-};
-
-Table.propTypes = {
-    page: PropTypes.number.isRequired,
-    setPage: PropTypes.func.isRequired,
 };
 
 export default Table;
