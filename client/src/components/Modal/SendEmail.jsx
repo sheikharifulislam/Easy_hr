@@ -34,7 +34,7 @@ const SendEmail = ({ onClose }) => {
                 if (result.message) {
                     setSelectedEmails(new Set([]));
                     onClose();
-                    toast(result.message);
+                    toast.success(result.message);
                 }
             }
         } catch (e) {

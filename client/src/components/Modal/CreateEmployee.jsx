@@ -29,7 +29,7 @@ const CreateEmployee = ({ onClose }) => {
                 const user = await createEmployeeMutation(validateData);
                 if (user) {
                     onClose();
-                    toast("Successfully created employee");
+                    toast.success("Successfully created employee");
                 }
             }
         } catch (e) {
