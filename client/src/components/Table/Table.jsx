@@ -39,7 +39,7 @@ const Table = ({ page, setPage }) => {
         page,
     });
 
-    const { employees = [] } = result;
+    const { data: employees = [] } = result;
     const pages = useMemo(() => {
         const rowsPerPage = 5;
         return Math.ceil(result?.pagination?.total_records / rowsPerPage);
